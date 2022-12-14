@@ -62,7 +62,18 @@ class World (Context):
         self.events.append (seagull.Seagull())
         self.events.append (sickness.Sickness())
         self.events.append (drowned_pirates.DrownedPirates())
+        self.events.append (fish.Fish())
         self.nouns["world"] = self
+        wrecked_ship_list = [island.Island]
+        for cur_wrecked_ship in wrecked_ship_list:
+            placed = False
+            while placed == False:
+                x = random.randrange (1, World.worldsize - 4)
+                y = random.randrange (1, World.worldsize - 4)
+                #Wrecked ship can't be within a 2x2 square of the start location
+                if (self.locs[x][y].name == "ocean") and ((y in range(self.starty-5, self.starty+1)) or (x in range(self.startx-5, self.startx+1))):
+                    self.locs[x][y] = cur_wrecked_ship (x, y, self)
+                    placed = True
 
     def get_day (self):
         return self.day
